@@ -2,7 +2,7 @@ import os
 import re
 import io
 import pyrogram
-
+from pyrogram.enums import ParseMode
 from pyrogram import filters, Client
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -148,7 +148,7 @@ async def addfilter(client, message):
     await message.reply_text(
         f"Filtre  `{text}` için  **{title}** grubuna eklendi!",
         quote=True,
-        parse_mode="md"
+        parse_mode=ParseMode.MARKDOWN
     )
 
 
@@ -158,30 +158,9 @@ async def get_all(client, message):
     chat_type = message.chat.type
     userid = message.from_user.id
     if chat_type == "private":
-        
-        grpid = await active_connection(str(userid))
-        if grpid is not None:
-            grp_id = grpid
-            try:
-                chat = await client.get_chat(grpid)
-                title = chat.title
-            except:
-                await message.reply_text("Grubunda mıyım bak bi!!", quote=True)
-                return
-        else:
-            await message.reply_text("Hiç bir gruba bağlı değilim!", quote=True)
-            return
-
-    elif (chat_type == "group") or (chat_type == "supergroup"):
-        grp_id = message.chat.id
-        title = message.chat.title
-
-    else:
-        return
-
-    st = await client.get_chat_member(grp_id, userid)
-    if not ((st.status == "administrator") or (st.status == "creator") or (str(userid) in Config.AUTH_USERS)):
-        return
+    grp_id = "5484431391"  
+    chat = await client.get_chat(grp_id)
+    title = chat.title
 
     texts = await get_filters(grp_id)
     count = await count_filters(grp_id)
