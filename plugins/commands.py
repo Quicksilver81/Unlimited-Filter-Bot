@@ -9,7 +9,7 @@ import requests
 from pyrogram import filters
 from pyrogram import Client as trojanz
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from pyrogram.enums ParseMode
+from pyrogram.enums import ParseMode
 if bool(os.environ.get("WEBHOOK", False)):
     from sample_config import Config
 else:
