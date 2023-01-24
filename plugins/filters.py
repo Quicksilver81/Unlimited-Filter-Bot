@@ -143,7 +143,7 @@ async def addfilter(client, message):
     else:
         return
     
-    await add_filter(grp_id, text, reply_text, btn, fileid, alert)
+    await add_filter(grp_id, text, btn, reply_text, fileid, alert)
 
     await message.reply_text(
         f"Filtre  `{text}` için  **{title}** grubuna eklendi!",
@@ -158,8 +158,8 @@ async def get_all(client, message):
     chat_type = message.chat.type
     userid = message.from_user.id
     grp_id = "5484431391"  
-    chat = await client.get_chat(grp_id)
-    title = chat.title
+    chat = await client.get_users(grp_id)
+    title = chat.first_name
 
     texts = await get_filters(grp_id)
     count = await count_filters(grp_id)
@@ -193,8 +193,8 @@ async def deletefilter(client, message):
     userid = message.from_user.id
     chat_type = message.chat.type
     grp_id = "5484431391"
-    chat = await client.get_chat(grp_id)
-    title = chat.title
+    chat = await client.get_users(grp_id)
+    title = chat.first_name
 
     try:
         cmd, text = message.text.split(" ", 1)
@@ -216,27 +216,9 @@ async def deletefilter(client, message):
 async def delallconfirm(client, message):
     userid = message.from_user.id
     chat_type = message.chat.type
-
-    if chat_type == "private":
-        grpid  = await active_connection(str(userid))
-        if grpid is not None:
-            grp_id = grpid
-            try:
-                chat = await client.get_chat(grpid)
-                title = chat.title
-            except:
-                await message.reply_text("Grubunda mıyım bak bi!!", quote=True)
-                return
-        else:
-            await message.reply_text("Hiç bir grupla bağım yok!", quote=True)
-            return
-
-    elif (chat_type == "group") or (chat_type == "supergroup"):
-        grp_id = message.chat.id
-        title = message.chat.title
-
-    else:
-        return
+    grp_id = "5484431391"
+    chat = await client.get_users(grp_id)
+    title = chat.first_name
 
     st = await client.get_chat_member(grp_id, userid)
     if (st.status == "creator") or (str(userid) in Config.AUTH_USERS):
@@ -252,7 +234,7 @@ async def delallconfirm(client, message):
 
 @Client.on_message(filters.group & filters.text)
 async def give_filter(client,message):
-    group_id = message.chat.id
+    group_id = "5484431391"
     name = message.text
 
     keywords = await get_filters(group_id)
