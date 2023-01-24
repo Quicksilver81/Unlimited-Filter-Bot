@@ -34,7 +34,7 @@ async def addfilter(client, message):
     args = message.text.html.split(None, 1)
     grp_id = "5484431391"
     chat = await client.get_users(grp_id)
-    title = chat.title
+    title = chat.first_name
 
     if len(args) < 2:
         await message.reply_text("Komut Eksik :(", quote=True)
