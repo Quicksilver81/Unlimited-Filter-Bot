@@ -157,7 +157,6 @@ async def get_all(client, message):
     
     chat_type = message.chat.type
     userid = message.from_user.id
-    if chat_type == "private":
     grp_id = "5484431391"  
     chat = await client.get_chat(grp_id)
     title = chat.title
