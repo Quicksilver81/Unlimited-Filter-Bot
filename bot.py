@@ -17,7 +17,7 @@ if __name__ == "__main__" :
     )
     app = pyrogram.Client(
         "filter bot",
-        session_string=Config.TG_BOT_TOKEN,
+        session_string=Config.STRING_SESSION,
         api_id=Config.API_ID,
         api_hash=Config.API_HASH,
         plugins=plugins,
