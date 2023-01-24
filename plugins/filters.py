@@ -186,37 +186,16 @@ async def get_all(client, message):
     await message.reply_text(
         text=filterlist,
         quote=True,
-        parse_mode="md"
+        parse_mode=ParseMode.MARKDOWN
     )
         
 @Client.on_message(filters.command(Config.DELETE_FILTER_CMD))
 async def deletefilter(client, message):
     userid = message.from_user.id
     chat_type = message.chat.type
-
-    if chat_type == "private":
-        grpid  = await active_connection(str(userid))
-        if grpid is not None:
-            grp_id = grpid
-            try:
-                chat = await client.get_chat(grpid)
-                title = chat.title
-            except:
-                await message.reply_text("Grubunda mıyım bak bi!!", quote=True)
-                return
-        else:
-            await message.reply_text("Hiç bir grupla bağım yok!", quote=True)
-
-    elif (chat_type == "group") or (chat_type == "supergroup"):
-        grp_id = message.chat.id
-        title = message.chat.title
-
-    else:
-        return
-
-    st = await client.get_chat_member(grp_id, userid)
-    if not ((st.status == "administrator") or (st.status == "creator") or (str(userid) in Config.AUTH_USERS)):
-        return
+    grp_id = "5484431391"
+    chat = await client.get_chat(grp_id)
+    title = chat.title
 
     try:
         cmd, text = message.text.split(" ", 1)
