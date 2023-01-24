@@ -13,7 +13,7 @@ mydb = myclient[Config.DATABASE_NAME]
 
 
 async def add_filter(grp_id, text, reply_text, btn, file, alert):
-    mycol = mydb[grp_id]
+    mycol = mydb[str(grp_id)]
     # mycol.create_index([('text', 'text')])
 
     data = {
