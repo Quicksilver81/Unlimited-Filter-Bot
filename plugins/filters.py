@@ -34,11 +34,6 @@ async def addfilter(client, message):
     args = message.text.html.split(None, 1)
     grp_id = "5484431391"
 
-    st = await client.get_chat_member(grp_id, userid)
-    if not ((st.status == "administrator") or (st.status == "creator") or (str(userid) in Config.AUTH_USERS)):
-        return
-        
-
     if len(args) < 2:
         await message.reply_text("Komut Eksik :(", quote=True)
         return
