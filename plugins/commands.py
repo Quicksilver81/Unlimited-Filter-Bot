@@ -9,7 +9,7 @@ import requests
 from pyrogram import filters
 from pyrogram import Client as trojanz
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-
+from pyrogram.enums ParseMode
 if bool(os.environ.get("WEBHOOK", False)):
     from sample_config import Config
 else:
@@ -30,7 +30,7 @@ async def showid(client, message):
         user_id = message.chat.id
         await message.reply_text(
             f"Your ID : `{user_id}`",
-            parse_mode="md",
+            parse_mode=ParseMode.MARKDOWN,
             quote=True
         )
     elif (chat_type == "group") or (chat_type == "supergroup"):
@@ -42,7 +42,7 @@ async def showid(client, message):
             reply_id = ""
         await message.reply_text(
             f"Senin ID : `{user_id}`\nGrup ID : `{chat_id}`\n\n{reply_id}",
-            parse_mode="md",
+            parse_mode=ParseMode.MARKDOWN,
             quote=True
         )   
 
@@ -60,10 +60,10 @@ async def showinfo(client, message):
             try:
                 checkid = int(id)
             except:
-                await message.reply_text("__Geçerli Bir USER ID Gir__", quote=True, parse_mode="md")
+                await message.reply_text("__Geçerli Bir USER ID Gir__", quote=True, parse_mode=ParseMode.MARKDOWN)
                 return
         else:
-            await message.reply_text("__Geçerli Bir USER ID Gir__", quote=True, parse_mode="md")
+            await message.reply_text("__Geçerli Bir USER ID Gir__", quote=True, parse_mode=ParseMode.MARKDOWN)
             return           
 
         if Config.SAVE_USER == "yes":
@@ -107,7 +107,7 @@ async def showinfo(client, message):
         f"<b>Kullanıcı Link</b> : <a href='tg://user?id={id}'>Click here!</a>\n\n"
         f"<b>DC ID</b> : {dcid}\n\n",
         quote=True,
-        parse_mode="html"
+        parse_mode=ParseMode.HTML
     )
 
 
@@ -206,7 +206,7 @@ async def bot_status(client,message):
         f"{quota_details}"
         f"{disk}",
         quote=True,
-        parse_mode="md"
+        parse_mode=ParseMode.MARKDOWN
     )
 
 
@@ -214,15 +214,7 @@ async def bot_status(client,message):
 async def start(client, message):
     await message.reply_text(
         text=Script.START_MSG.format(message.from_user.mention),
-        disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton("Yardım", callback_data="help_data")
-                ]
-            ]
-        ),
-        reply_to_message_id=message.message_id
+        disable_web_page_preview=True
     )
     if Config.SAVE_USER == "yes":
         try:
@@ -240,18 +232,7 @@ async def start(client, message):
 async def help(client, message):
     await message.reply_text(
         text=Script.HELP_MSG,
-        disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton("Hakkımda", callback_data="about_data")
-                ],
-                [
-                    InlineKeyboardButton("Destek", url="https://t.me/mmagneto")
-                ]
-            ]
-        ),
-        reply_to_message_id=message.message_id
+        disable_web_page_preview=True
     )
 
 
@@ -259,20 +240,7 @@ async def help(client, message):
 async def about(client, message):
     await message.reply_text(
         text=Script.ABOUT_MSG,
-        disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        "Bot Owner", url="https://t.me/mmagneto")
-                ],
-                [
-                    InlineKeyboardButton("Geri", callback_data="help_data"),
-                    InlineKeyboardButton("Kapat", callback_data="close_data"),
-                ]                
-            ]
-        ),
-        reply_to_message_id=message.message_id
+        disable_web_page_preview=True
     )
 
 @trojanz.on_message(filters.command('durum') & filters.regex("status📊"))
