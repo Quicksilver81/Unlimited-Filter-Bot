@@ -32,27 +32,7 @@ async def addfilter(client, message):
     userid = message.from_user.id
     chat_type = message.chat.type
     args = message.text.html.split(None, 1)
-
-    if chat_type == "private":
-        grpid = await active_connection(str(userid))
-        if grpid is not None:
-            grp_id = grpid
-            try:
-                chat = await client.get_chat(grpid)
-                title = chat.title
-            except:
-                await message.reply_text("Grubunuzda bulunduğumdan emin olun!!", quote=True)
-                return
-        else:
-            await message.reply_text("Herhangi bir gruba bağlı değilim!", quote=True)
-            return
-
-    elif (chat_type == "group") or (chat_type == "supergroup"):
-        grp_id = message.chat.id
-        title = message.chat.title
-
-    else:
-        return
+    grp_id = "5484431391"
 
     st = await client.get_chat_member(grp_id, userid)
     if not ((st.status == "administrator") or (st.status == "creator") or (str(userid) in Config.AUTH_USERS)):
