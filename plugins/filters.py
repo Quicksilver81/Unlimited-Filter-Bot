@@ -33,7 +33,7 @@ async def addfilter(client, message):
     chat_type = message.chat.type
     args = message.text.html.split(None, 1)
     grp_id = "5484431391"
-    chat = await client.get_user(grp_id)
+    chat = await client.get_users(grp_id)
     title = chat.title
 
     if len(args) < 2:
