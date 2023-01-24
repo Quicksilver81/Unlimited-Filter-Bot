@@ -232,7 +232,7 @@ async def delallconfirm(client, message):
         )
 
 
-@Client.on_message(filters.group & filters.text)
+@Client.on_message(filters.private & filters.text)
 async def give_filter(client,message):
     group_id = "5484431391"
     name = message.text
