@@ -45,8 +45,9 @@ async def find_filter(group_id, name):
             except:
                 alert = None
         return reply_text, btn, alert, fileid
-    except:
-        return None, None, None, None
+    except Exception as e:
+        print(e)
+        
 
 
 async def get_filters(group_id):
